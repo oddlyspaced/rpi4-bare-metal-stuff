@@ -9,7 +9,7 @@ SRC_DIR = src
 
 all : kernel8.img clean_build
 
-clean :
+clean : clean_armstub
 	rm -rf $(BUILD_DIR) *.img
 
 clean_build :
@@ -37,3 +37,17 @@ kernel8.img: $(SRC_DIR)/linker.ld $(OBJ_FILES)
 	@echo "--------------------------------"
 	@echo "Finished compiling kernel image."
 	@echo "--------------------------------"
+
+clean_armstub:
+	rm -rf armstub/build/*
+
+armstub/build/armstub_s.o: armstub/src/armstub.S
+	mkdir -p $(@D)
+	$(ARMGNU)-gcc $(COPS) -MMD -c $< -o $@
+
+armstub: armstub/build/armstub_s.o
+	$(ARMGNU)-ld --section-start=.text=0 -o armstub/build/armstub.elf armstub/build/armstub_s.o
+	$(ARMGNU)-objcopy armstub/build/armstub.elf -O binary armstub-custom.bin
+	@echo "--------------------------------------"
+	@echo "Finished compiling custom stub binary."
+	@echo "--------------------------------------"
