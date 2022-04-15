@@ -23,6 +23,7 @@ void kernel_main() {
     irq_init_vectors();
     enable_interrupt_controller();
     irq_enable();
+    timer_init();
 
     while (1) {
         // uart_send(uart_recv());
