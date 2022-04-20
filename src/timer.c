@@ -19,3 +19,24 @@ void handle_timer_1() {
 
     printf("Timer 1 Received\n");
 }
+
+u64 timer_get_ticks() {
+    u32 hi = REGS_TIMER->counter_hi;
+    u32 lo = REGS_TIMER->counter_lo;
+
+    //double check hi value didn't change after setting it...
+    if (hi != REGS_TIMER->counter_hi) {
+        hi = REGS_TIMER->counter_hi;
+        lo = REGS_TIMER->counter_lo;
+    }
+
+    return ((u64)hi << 32) | lo;
+}
+
+void timer_sleep(u32 ms) {
+    u64 start = timer_get_ticks();
+
+    while(timer_get_ticks() < start + (ms * 1000)) {
+
+    }
+}
