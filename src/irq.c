@@ -9,8 +9,8 @@
 const char entry_error_message[16][32] = {
     "SYNC_INVALID_EL1t",
     "IRQ_INVALID_EL1t",
-    "F1Q_INVALID_EL1t",
-    "ERROR_INVALID_EL1t",
+    "FIQ_INVALID_EL1t",
+    "ERROR_INVALID_EL1T",
 
     "SYNC_INVALID_EL1h",
     "IRQ_INVALID_EL1h",
@@ -33,7 +33,7 @@ void show_invalid_entry_message(u32 type, u64 esr, u64 address) {
 }
 
 void enable_interrupt_controller() {
-    REGS_IRQ->irq0_enable_0 = AUX_IRQ | SYS_TIMER_IRQ_1;
+    REGS_IRQ->irq0_enable_0 = AUX_IRQ | SYS_TIMER_IRQ_1 | SYS_TIMER_IRQ_3;
 }
 
 void handle_irq() {
