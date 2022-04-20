@@ -44,22 +44,21 @@ static void mailbox_write(u8 channel, u32 data) {
 }
 
 static u32 mailbox_read(u8 channel) {
-    while(1) {
-        while(MBX()->status & MAIL_EMPTY) {
-            u32 data = MBX()->read;
+    while(true) {
+        while(MBX()->status & MAIL_EMPTY);
+        u32 data = MBX()->read;
 
-            u8 read_channel = (u8)(data & 0xF);
+        u8 read_channel = (u8)(data & 0xF);
 
-            if (read_channel == channel) {
-                return data & 0xFFFFFFF0;
-            }
+        if (read_channel == channel) {
+            return data & 0xFFFFFFF0;
         }
     }
 }
 
 bool mailbox_process(mailbox_tag *tag, u32 tag_size) {
     int buffer_size = tag_size + 12;
-    memcpy(property_data[2], tag, tag_size);
+    memcpy(&property_data[2], tag, tag_size);
     property_buffer *buff = (property_buffer *) property_data;
     buff->size = buffer_size;
     buff->code = RPI_FIRMWARE_STATUS_REQUEST;
