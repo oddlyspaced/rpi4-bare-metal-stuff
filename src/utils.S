@@ -4,7 +4,7 @@ delay:
     bne delay
     ret
 
-.globl pu32
+.globl put32
 pu32:
     str w1, [x0]
     ret
