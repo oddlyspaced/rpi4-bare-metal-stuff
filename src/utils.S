@@ -5,7 +5,7 @@ delay:
     ret
 
 .globl put32
-pu32:
+put32:
     str w1, [x0]
     ret
 
