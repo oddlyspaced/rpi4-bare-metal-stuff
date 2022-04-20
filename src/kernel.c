@@ -2,6 +2,7 @@
 #include "mini_uart.h"
 #include "printf.h"
 #include "irq.h"
+#include "mailbox.h"
 
 void putc(void *p, char c) {
     if (c == '\n') {
@@ -23,9 +24,23 @@ void kernel_main() {
     irq_init_vectors();
     enable_interrupt_controller();
     irq_enable();
-    timer_init();
+    // timer_init();
+    
+    printf("\nMAILBOX:\n");
+    printf("hello?\n");
+    printf("CORE CLOCK: %d\n", mailbox_clock_rate(CT_CORE));
+    printf("EMMC CLOCK: %d\n", mailbox_clock_rate(CT_EMMC));
+    printf("UART CLOCK: %d\n", mailbox_clock_rate(CT_UART));
+    printf("ARM CLOCK: %d\n", mailbox_clock_rate(CT_ARM));
 
     while (1) {
-        // uart_send(uart_recv());
+        printf("\nMAILBOX:\n");
+        printf("hello?\n");
+        printf("CORE CLOCK: %d\n", mailbox_clock_rate(CT_CORE));
+        printf("EMMC CLOCK: %d\n", mailbox_clock_rate(CT_EMMC));
+        printf("UART CLOCK: %d\n", mailbox_clock_rate(CT_UART));
+        printf("ARM CLOCK: %d\n", mailbox_clock_rate(CT_ARM));
+
+       uart_send(uart_recv());
     }
 }
