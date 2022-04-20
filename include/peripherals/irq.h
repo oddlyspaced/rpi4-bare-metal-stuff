@@ -27,4 +27,4 @@ struct arm_irq_regs_2711 {
 
 typedef struct arm_irq_regs_2711 arm_irq_regs;
 
-#define REGS_IRQ ((arm_irq_regs *)(PBASE + 0x00B200))
+#define REGS_IRQ ((arm_irq_regs *)(PBASE + 0x0000B200))
